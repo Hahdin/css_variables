@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css</title>
+</head>
+<body>
+  <div id="ball"></div>
+</body>
+<script>
+window.onload = () => {
+  document.documentElement.style.setProperty('--screen-x', window.innerWidth);
+  document.documentElement.style.setProperty('--screen-y', window.innerHeight);
+  document.addEventListener('mousemove', e => {
+    document.documentElement.style.setProperty('--mouse-x', e.x);
+    document.documentElement.style.setProperty('--mouse-y', e.y);
+  }, {passive: true});
+};
+window.onresize = () => {
+  document.documentElement.style.setProperty('--screen-x', window.innerWidth);
+  document.documentElement.style.setProperty('--screen-y', window.innerHeight);
+};
+</script>
+<style>
+:root {
+  --screen-x: 0; --screen-y: 0;
+  --mouse-x:  0; --mouse-y:  0;
+  --stop:   10%;
+}
+html,body {
+  height:100%;
+  margin: 10;
+  padding: 10;
+}
+
+#ball {
+  width: 20px;
+  height: 20px;
+  background: rgb(
+    calc(255 - (255 / 100 * var(--mouse-y) / var(--screen-y) * 100)),
+    calc(255 / 100 * var(--mouse-x) / var(--screen-x) * 100),
+    calc((255 / 100 * var(--mouse-y) / var(--screen-y) * 100)));
+  transform: translate(
+    calc(calc(var(--mouse-x) - 10) * 1px), 
+    calc(calc(var(--mouse-y) - 10) * 1px)
+  );
+  border-radius: 100%;
+}
+body {
+  background: radial-gradient(
+    circle at calc(var(--mouse-x) * 1px) calc(var(--mouse-y) * 1px),
+    rgb(
+    calc(255 / 100 * var(--mouse-x) / var(--screen-x) * 100),
+    calc(255 / 100 * var(--mouse-y) / var(--screen-y) * 100),
+    calc(255 / 100 * var(--mouse-x) / var(--screen-x) * 100)) 0,
+    rgb(
+    calc(255 / 100 * var(--mouse-y) / var(--screen-x) * 100),
+    calc(255 / 100 * var(--mouse-x) / var(--screen-y) * 100),
+    calc(255 / 100 * var(--mouse-x) / var(--screen-y) * 100)) var(--stop),
+    #000);
+}
+</style>
+</html>
